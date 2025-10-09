@@ -10,52 +10,54 @@
  *              that encapsulates common string manipulation functionalities. 
  *              
  */
-
-package Java.openupvs.Assignment1;
+package Java.openupvs.Assignment1_2;
 
 public class Mystring {
-    
-    private String data;
+    private String User_string;
 
     // Default constructor
     public Mystring() {
-        this.data = "";
+        this.User_string = "";
     }
 
     // Parameterized constructor
     public Mystring(String string) {
-        this.data = string;
+        this.User_string = string;
     }
 
     // Convert object to string
     @Override
     public String toString() {
-        return this.data;
+        return this.User_string;
     }
 
     // Print current string
     public void Printstring() {
-        System.out.println("The value stored in Mystring is: " + this.data);
+        System.out.println("The value stored in Mystring is: " + this.User_string);
     }
 
     // Append another string to data
-    public void append(String toAppend) {
-        this.data = this.data + " " + toAppend;
+    public String append(String newstring) {
+        this.User_string = this.User_string + " " + newstring;
+        return this.User_string;
+    }
+    // Overloaded method to handle integer input
+    public String append(int number) {
+        this.User_string = this.User_string + " " + number; 
+        return this.User_string;
     }
 
     // Count number of words in data
-    public int count() {
+    public int getcount() {
         int count = 0;
         boolean inWord = false;
 
-        for (int i = 0; i < data.length(); i++) {
-            char c = data.charAt(i);
-            // Start of a new word
-            if (c != ' ' && !inWord) {
+        for (int i = 0; i < User_string.length(); i++) {
+            char char_at_i = User_string.charAt(i);
+            if (char_at_i != ' ' && !inWord) {
                 inWord = true;
                 count++;
-            } else if (c == ' ') {
-                // End of a word
+            } else if (char_at_i == ' ') {
                 inWord = false;
             }
         }
@@ -63,15 +65,15 @@ public class Mystring {
     }
 
     // Replace old word with new word
-    public void replace(String oldword, String newword) {
+    public String replace(String oldword, String newword) {
         String result = "";
         String temp = "";
 
-        for (int i = 0; i < data.length(); i++) {
-            char ch = data.charAt(i);
+        for (int i = 0; i < User_string.length(); i++) {
+            char character_at_i = User_string.charAt(i);
 
-            if (ch != ' ') {
-                temp = temp + ch;
+            if (character_at_i != ' ') {
+                temp = temp + character_at_i;
             } else {
                 if (temp.equals(oldword)) {
                     result = result + newword + " ";
@@ -81,25 +83,25 @@ public class Mystring {
                 temp = "";
             }
         }
-        //Check for the last word
+
         if (temp.equals(oldword)) {
             result += newword + " ";
         } else if (!temp.isEmpty()) {
             result += temp + " ";
         }
 
-        this.data = result.trim();
+        this.User_string = result.trim();
+        return this.User_string;
     }
 
     // Check if data is palindrome
     public boolean isPalindrome() {
-        String text = data.replaceAll("\\s+", "").toLowerCase();//Remove spaces and convert the string to lower case
+        String text = User_string.replaceAll("\\s+", "").toLowerCase();
         int left = 0;
         int right = text.length() - 1;
 
         while (left < right) {
             if (text.charAt(left) != text.charAt(right)) {
-                //The string is not a palindrome is the char at i and length-i is not same
                 return false;
             }
             left++;
@@ -109,33 +111,32 @@ public class Mystring {
     }
 
     // Splice (remove) substring from start index for given length
-    public void splice(int start, int length) {
-        if (start < 0 || start >= data.length()) {
-            System.out.println("Invalid start index!");//check if the given length to slice is not greater then the given string
-            return;
+    public String splice(int start, int length) {
+        if (start < 0 || start >= User_string.length()) {
+            System.out.println("Invalid start index!");
+            return this.User_string;
         }
         String result = "";
-        for (int i = 0; i < data.length(); i++) {
+        for (int i = 0; i < User_string.length(); i++) {
             if (i < start || i >= start + length) {
-                result += data.charAt(i);
+                result += User_string.charAt(i);
             }
         }
-        this.data = result;
+        this.User_string = result;
+        return this.User_string;
     }
 
     // Split the data and print words
     public void split() {
         String word = "";
         System.out.println("Splitted string:");
-        for (int i = 0; i < data.length(); i++) {
-            char ch = data.charAt(i);
+        for (int i = 0; i < User_string.length(); i++) {
+            char ch = User_string.charAt(i);
             if (ch != ' ') {
-                word = word + ch;// build word
-
+                word = word + ch;
             } else {
                 System.out.println(word);
-                word = "";// reset for next word
-
+                word = "";
             }
         }
         if (word.length() > 0) {
@@ -144,55 +145,58 @@ public class Mystring {
     }
 
     // Find maximum repeating character
-    public char MaxRepeatingCharacter() {
+    public char Maximum_Repeating_Character() {
         int maxCount = 0;
         char maxChar = ' ';
-        for (int i = 0; i < data.length(); i++) {
+        for (int i = 0; i < User_string.length(); i++) {
             int count = 0;
-            for (int j = 0; j < data.length(); j++) {
-                if (data.charAt(i) == data.charAt(j)) count++;
+            for (int j = 0; j < User_string.length(); j++) {
+                if (User_string.charAt(i) == User_string.charAt(j)) count++;
             }
-            if (count > maxCount) //if the count is more then the maximun count till find then change the maxCount
-            {
+            if (count > maxCount) {
                 maxCount = count;
-                maxChar = data.charAt(i);
+                maxChar = User_string.charAt(i);
             }
         }
         return maxChar;
     }
 
     // Sort string alphabetically
-    public void sort() {
-        char[] arr = data.toCharArray();
-        //Bubble sorting
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j] > arr[j + 1])// using their ASCII/Unicode values
- 
-                {
-                    char temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+    public String sort() {
+    char[] arr = User_string.toCharArray();
+
+    for (int i = 0; i < arr.length - 1; i++) {
+        for (int j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                char temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
-        this.data = new String(arr);
     }
 
+    this.User_string = new String(arr); // store back sorted data
+    return this.User_string;            // return it as a String
+}
+
+
     // Shift the string by n characters
-    public void shift(int n) {
-        int len = data.length();
-        if (len == 0) return;
-        n = n % len;
-        this.data = data.substring(n) + data.substring(0, n);
+    public String shift(int shifted_by) {
+        int string_length = User_string.length();
+        if (string_length == 0) return "";
+        shifted_by = shifted_by % string_length;
+        this.User_string = User_string.substring(shifted_by) + User_string.substring(0, shifted_by);
+        return this.User_string;
     }
 
     // Reverse the string
-    public void reverse() {
+    public String reversestring() {
         String rev = "";
-        for (int i = data.length() - 1; i >= 0; i--) {
-            rev += data.charAt(i);
+        for (int i = User_string.length() - 1; i >= 0; i--) {
+            rev += User_string.charAt(i);
         }
-        this.data = rev;
+        this.User_string = rev;
+        return this.User_string;
     }
+
 }

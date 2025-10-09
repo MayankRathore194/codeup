@@ -10,31 +10,32 @@
  *              to test and execute all string manipulation methods defined in Mystring.
  *              
  */
-
-package Java.openupvs.Assignment1;
+package Java.openupvs.Assignment1_2;
 
 import java.util.Scanner;
 
-public class main {
+import Java.openupvs.Assignment1_2.Mystring;
 
+public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner_object = new Scanner(System.in);
         System.out.println("Enter your string:");
-        String str = sc.nextLine();
+        String Userstring = scanner_object.nextLine();
 
-        Mystring S = new Mystring(str);
-        S.Printstring();
+        Mystring Mystring_object = new Mystring(Userstring);
+        Mystring_object.Printstring();
+        boolean k=true;
 
-        while (true) {
+        while (k) {
             // Choices of operation
-            System.out.println("\n=== Choose an Operation ===");
+            System.out.println("\nChoose an Operation");
             System.out.println("1. Append");
             System.out.println("2. CountWords");
             System.out.println("3. Replace");
             System.out.println("4. isPalindrome");
             System.out.println("5. Splice");
             System.out.println("6. Split");
-            System.out.println("7. MaxRepeatingCharacter");
+            System.out.println("7. the Maximum Repeating Character");
             System.out.println("8. Sort");
             System.out.println("9. Shift");
             System.out.println("10. Reverse");
@@ -42,31 +43,31 @@ public class main {
             System.out.println("12. Exit");
             System.out.print("Enter choice (1-12): ");
 
-            int choice = sc.nextInt();
-            sc.nextLine(); 
+            int choice = scanner_object.nextInt();
+            scanner_object.nextLine(); // consume newline
 
             switch (choice) {
                 case 1:
                     System.out.println("Enter text to append:");
-                    String toappend = sc.nextLine();
-                    S.append(toappend);
+                    String newstring = scanner_object.nextLine();
+                    System.out.println(Mystring_object.append(newstring));
                     break;
 
                 case 2:
-                    int count = S.count();
-                    System.out.println("Number of words in the string: " + count);
+                    int Word_count = Mystring_object.getcount();
+                    System.out.println("Number of words in the string: " + Word_count);
                     break;
 
                 case 3:
                     System.out.println("Enter the word to replace:");
-                    String oldword = sc.nextLine();
+                    String oldword = scanner_object.nextLine();
                     System.out.println("Enter the word to replace with:");
-                    String newword = sc.nextLine();
-                    S.replace(oldword, newword);
+                    String newword = scanner_object.nextLine();
+                     System.out.println(Mystring_object.replace(oldword, newword));
                     break;
 
                 case 4:
-                    if (S.isPalindrome()) {
+                    if (Mystring_object.isPalindrome()) {
                         System.out.println("The string is a palindrome.");
                     } else {
                         System.out.println("The string is not a palindrome.");
@@ -75,44 +76,44 @@ public class main {
 
                 case 5:
                     System.out.print("Enter start index: ");
-                    int start = sc.nextInt();
+                    int start = scanner_object.nextInt();
                     System.out.print("Enter length: ");
-                    int length = sc.nextInt();
-                    sc.nextLine();
-                    S.splice(start, length);
+                    int length = scanner_object.nextInt();
+                    scanner_object.nextLine();
+                     System.out.println(Mystring_object.splice(start, length));
                     break;
 
                 case 6:
-                    S.split();
+                    Mystring_object.split();
                     break;
 
                 case 7:
-                    char maxfreq = S.MaxRepeatingCharacter();
-                    System.out.println("Maximum repeated character is: " + maxfreq);
+                    char Maximum_Repeating_Character = Mystring_object.Maximum_Repeating_Character();
+                    System.out.println("Maximum repeated character is: " + Maximum_Repeating_Character);
                     break;
 
                 case 8:
-                    S.sort();
+                     System.out.println(Mystring_object.sort());
                     break;
 
                 case 9:
                     System.out.print("Enter shift value: ");
-                    int sh = sc.nextInt();
-                    sc.nextLine();
-                    S.shift(sh);
+                    int shift_by = scanner_object.nextInt();
+                    scanner_object.nextLine();
+                     System.out.println(Mystring_object.shift(shift_by));
                     break;
 
                 case 10:
-                    S.reverse();
+                    System.out.println(Mystring_object.reversestring());
                     break;
 
                 case 11:
-                    S.Printstring();
+                    Mystring_object.Printstring();
                     break;
 
                 case 12:
-                    System.out.println("Exiting program");
-                    sc.close();
+                    System.out.println("Exiting program...");
+                    scanner_object.close();
                     return;
 
                 default:
@@ -121,3 +122,6 @@ public class main {
         }
     }
 }
+    
+    
+

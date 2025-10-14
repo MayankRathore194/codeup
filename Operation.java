@@ -1,4 +1,4 @@
-   /**
+  /**
  * @filename Operations.java
  * This file defines the Operations class which performs various string and number operations
  * including counting palindromes, Fibonacci sequence, string conversions, counting consonants,
@@ -10,33 +10,30 @@
  * @description The Operations class provides static methods for different computational
  *              and string manipulation functionalities used by the Main class.
  */
-package Java.openupvs.Assignment2_2;
+package Java.openupvs.Assignment2_3;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.print.DocFlavor.STRING;
-
-public class Operation {
+public class Operations {
     //Method to find nth element in a Fibonacci Sequence
-    public static int Nth_Fibonacci_Sequence_Element(int position)
+    public static long getNthFibonacci(long position)
     {
-        if(position==0)
-        {
-            return 0;
+        if (position <= 1) return 0;
+        if (position == 2 || position == 3) return 1;
+        long a = 1, b = 1;
+        for (long i = 3; i <= position; i++) {
+            long temp = a + b;
+            a = b; b = temp;
         }
-        if(position==1)
-        {
-            return 1;
-        }
-        return Nth_Fibonacci_Sequence_Element(position - 1) + Nth_Fibonacci_Sequence_Element(position - 2); //recursive call
+        return b;
 
     }
     //Count Consonants
-    public static int countConsonants(String s) {
+    public static int getConsonantCount(String userString) {
         int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
+        for (int i = 0; i < userString.length(); i++) {
+            char ch = userString.charAt(i);
             if ((ch >= 'A' && ch <= 'Z')) ch = (char) (ch + 32); // convert to lowercase 
 
             if (ch >= 'a' && ch <= 'z' && ch != 'a' && ch != 'e' && ch != 'i' && ch != 'o' && ch != 'u')
@@ -44,7 +41,7 @@ public class Operation {
         }
         return count;
     }
-    public static long binaryToDecimal(long binaryNumber) {
+    public static long convertBinaryToDecimal(long binaryNumber) {
         long decimalNumber = 0;
         int power = 0; // Represents the current power of 2 (2^0, 2^1, 2^2, ...)
 
@@ -67,15 +64,15 @@ public class Operation {
         return decimalNumber;
     }
     //This method expand each character by repeating it according to the digit that follows
-    public static String Expand_user_string(String userstring)
+    public static String expandCharacters(String userString)
     {
         String Expanded_string="";
-        for(int i=0;i<userstring.length();i++)
+        for(int i=0;i<userString.length();i++)
         {
-            char ch=userstring.charAt(i);
-            if(i+1<userstring.length())
+            char ch=userString.charAt(i);
+            if(i+1<userString.length())
             {
-                char next = userstring.charAt(i + 1);
+                char next = userString.charAt(i + 1);
                 if (next >= '0' && next <= '9') {
                     int repeat = next - '0';// convert String to int
                     for (int j = 0; j < repeat; j++) {
@@ -90,16 +87,16 @@ public class Operation {
 
     }
     //This method  output the frequency of each character in a compressed form
-    public static String Compressed_string_form(String USER_string)
+    public static String getCharacterFrequency(String userString)
     {
         String Compressed_string = "";
 
         int count = 1;
-        for (int i = 0; i < USER_string.length(); i++) {
-            if (i + 1 < USER_string.length() && USER_string.charAt(i) == USER_string.charAt(i + 1)) {
+        for (int i = 0; i < userString.length(); i++) {
+            if (i + 1 < userString.length() && userString.charAt(i) == userString.charAt(i + 1)) {
                 count++;
             } else {
-                Compressed_string = Compressed_string + USER_string.charAt(i) + count;
+                Compressed_string = Compressed_string + userString.charAt(i) + count;
                 count = 1;
             }
         }
@@ -108,11 +105,11 @@ public class Operation {
         return Compressed_string;
     }
     //Method to check prime number
-    public static String Check_if_number_is_Prime(int user_number)
+    public static String checkPrimeNumber(long userNumber)
     {
-        if (user_number <= 1) return "The given number is NOT prime.";
-        for (int i = 2; i * i <= user_number; i++) {
-            if (user_number % i == 0)
+        if (userNumber <= 1) return "The given number is NOT prime.";
+        for (long i = 2; i * i <= userNumber; i++) {
+            if (userNumber % i == 0)
                 return "The given number is NOT prime.";
         }
         return "The given number is PRIME.";
@@ -134,9 +131,9 @@ public class Operation {
         } else return "number too large";
     }
     //Method to get longest substring
-    public static int longestUniqueSubstr(String uString) {
+    public static int getLongestUniqueSubstringLength(String userString) {
         
-        int Length = uString.length();
+        int Length = userString.length();
         int Longestsubstr = 0;
 
         // last index of all characters is initialized as -1
@@ -150,48 +147,36 @@ public class Operation {
 
         // Move end of current window
         for (int end = 0; end < Length; end++) {
-            start = Math.max(start, lastIndex[uString.charAt(end) - 'a'] + 1);
+            start = Math.max(start, lastIndex[userString.charAt(end) - 'a'] + 1);
 
             // Update result if we get a larger window
             Longestsubstr = Math.max(Longestsubstr, end - start + 1);
 
             // Update last index of s[end]
-            lastIndex[uString.charAt(end) - 'a'] = end;
+            lastIndex[userString.charAt(end) - 'a'] = end;
         }
         return Longestsubstr;
     }
     // Recursive function to generate unique palindromes
-    static void generateUniquePalindromes(String iString, String current, int index, List<String> result) {
-        int Length = iString.length();
+    public static int getUniquePalindromes(String s) {
+        Set<String> unique = new HashSet<>();
 
-        // Base case
-        if (index == Length) {
-            if (!current.equals("") && isPalindrome(current)) {
-                // Add only if not already in list
-                if (!result.contains(current)) {
-                    result.add(current);
-                }
-            }
-            return;
+        for (int i = 0; i < s.length(); i++) {
+            expandAndCollectPalindromes(s, i, i, unique);     // odd-length
+            expandAndCollectPalindromes(s, i, i + 1, unique); // even-length
         }
 
-        // Include current character
-        generateUniquePalindromes(iString, current + iString.charAt(index), index + 1, result);
-
-        // Exclude current character
-        generateUniquePalindromes(iString, current, index + 1, result);
+        return unique.size();
     }
 
-    // function to check palindrome
-    static boolean isPalindrome(String str) {
-        int i = 0, j = str.length() - 1;
-        while (i < j) {
-            if (str.charAt(i) != str.charAt(j))
-                return false;
-            i++;
-            j--;
+    private static void expandAndCollectPalindromes(String s, int left, int right, Set<String> unique) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            if (right - left + 1 > 1) { // count palindromes of length >= 2
+                unique.add(s.substring(left, right + 1));
+            }
+            left--;
+            right++;
         }
-        return true;
     }
     //Snake Case to Camel Case Conversion
     public static String snakeToCamel(String s) {
@@ -213,6 +198,5 @@ public class Operation {
         }
         return result;
     }
-
+    
 }
-        
